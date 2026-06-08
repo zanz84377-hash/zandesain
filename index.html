@@ -7,156 +7,148 @@
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
   <script src="/_sdk/element_sdk.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&amp;family=DM+Sans:wght@300;400;500&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&amp;family=DM+Sans:wght@400;500&amp;display=swap" rel="stylesheet">
   <style>
     html, body { height: 100%; margin: 0; }
-    .font-syne { font-family: 'Syne', sans-serif; }
-    .font-dm { font-family: 'DM Sans', sans-serif; }
-    .gradient-blob {
-      position: absolute;
+    * { font-family: 'DM Sans', sans-serif; }
+    .font-heading { font-family: 'Sora', sans-serif; }
+    .profile-ring {
+      background: conic-gradient(from 0deg, #f97316, #ec4899, #8b5cf6, #3b82f6, #f97316);
+      padding: 4px;
       border-radius: 50%;
-      filter: blur(80px);
-      opacity: 0.4;
-      animation: float 8s ease-in-out infinite;
     }
-    @keyframes float {
-      0%, 100% { transform: translateY(0px) scale(1); }
-      50% { transform: translateY(-20px) scale(1.05); }
-    }
-    .card-hover { transition: transform 0.3s ease, box-shadow 0.3s ease; }
-    .card-hover:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
-    .fade-in { animation: fadeIn 0.8s ease forwards; opacity: 0; }
-    .fade-in:nth-child(1) { animation-delay: 0.1s; }
-    .fade-in:nth-child(2) { animation-delay: 0.2s; }
-    .fade-in:nth-child(3) { animation-delay: 0.3s; }
-    .fade-in:nth-child(4) { animation-delay: 0.4s; }
-    @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
-    .fade-in { transform: translateY(20px); }
-    .photo-slot { 
-      position: relative; 
-      overflow: hidden; 
-      cursor: pointer;
-      background: linear-gradient(135deg, #1a1a2e, #16213e);
-    }
-    .photo-slot img { width: 100%; height: 100%; object-fit: cover; }
-    .photo-slot .placeholder-content { 
-      position: absolute; inset: 0; 
-      display: flex; flex-direction: column; 
-      align-items: center; justify-content: center; 
-      gap: 8px; color: #64748b;
-      transition: background 0.3s;
-    }
-    .photo-slot:hover .placeholder-content { background: rgba(99,102,241,0.1); }
-    .photo-slot .placeholder-content.hidden { display: none; }
+    .card-hover { transition: transform 0.3s, box-shadow 0.3s; }
+    .card-hover:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
+    .animate-fade-up { animation: fadeUp 0.7s ease forwards; }
+    .delay-1 { animation-delay: 0.1s; opacity:0; }
+    .delay-2 { animation-delay: 0.2s; opacity:0; }
+    .delay-3 { animation-delay: 0.3s; opacity:0; }
+    .delay-4 { animation-delay: 0.4s; opacity:0; }
   </style>
   <style>body { box-sizing: border-box; }</style>
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
  <script src="/_sdk/telemetry_sdk.js"></script></head>
- <body class="h-full w-full overflow-auto bg-[#0a0a0f] text-white font-dm">
-  <div class="relative w-full min-h-full">
-   <!-- Blobs -->
-   <div class="gradient-blob w-72 h-72 bg-indigo-600 top-10 left-10 fixed"></div>
-   <div class="gradient-blob w-96 h-96 bg-purple-700 bottom-20 right-10 fixed" style="animation-delay: 2s;"></div>
-   <div class="gradient-blob w-60 h-60 bg-cyan-500 top-1/2 left-1/2 fixed" style="animation-delay: 4s;"></div><!-- Nav -->
-   <nav class="relative z-10 flex items-center justify-between px-6 md:px-12 py-6">
-    <span class="font-syne font-bold text-xl tracking-tight" id="nav-name">MFR</span>
-    <div class="flex gap-6 text-sm text-gray-400">
-     <a href="#about" class="hover:text-white transition">Tentang</a> <a href="#work" class="hover:text-white transition">Karya</a> <a href="#contact" class="hover:text-white transition">Kontak</a>
-    </div>
-   </nav><!-- Hero -->
-   <section class="relative z-10 px-6 md:px-12 py-16 md:py-24 flex flex-col md:flex-row items-center gap-12">
-    <div class="flex-1">
-     <p class="text-indigo-400 text-sm font-medium mb-3 tracking-widest uppercase">Portfolio</p>
-     <h1 class="font-syne font-800 text-4xl md:text-6xl leading-tight mb-4" id="hero-title">Muhammad Fauzan Ramdan</h1>
-     <p class="text-xl md:text-2xl text-gray-300 mb-6" id="hero-subtitle">Young Creative Designer</p>
-     <p class="text-gray-400 max-w-md mb-8" id="about-text">Desainer muda yang passionate dalam menciptakan visual yang memukau dan pengalaman digital yang bermakna.</p><a href="#work" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 px-6 py-3 rounded-full text-sm font-medium transition"> Lihat Karya <i data-lucide="arrow-down-right" style="width:16px;height:16px;"></i> </a>
-    </div><!-- Profile Photo -->
-    <div class="photo-slot w-64 h-72 md:w-80 md:h-96 rounded-2xl border border-white/10 flex-shrink-0" id="profile-photo">
-     <input type="file" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer z-10" onchange="loadPhoto(this, 'profile-photo')">
-     <div class="placeholder-content" id="profile-photo-placeholder">
-      <i data-lucide="camera" style="width:32px;height:32px;"></i> <span class="text-sm"></span>
+ <body class="h-full">
+  <div id="app" class="h-full w-full overflow-auto bg-[#0f0f12] text-white"><!-- Nav -->
+   <nav class="fixed top-0 w-full z-50 backdrop-blur-md bg-[#0f0f12]/80 border-b border-white/5">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center"><span class="font-heading font-bold text-lg text-orange-400">MFR</span>
+     <div class="flex gap-6 text-sm text-gray-400"><a href="#home" class="hover:text-white transition">Home</a> <a href="#about" class="hover:text-white transition">About</a> <a href="#work" class="hover:text-white transition">Work</a> <a href="#contact" class="hover:text-white transition">Contact</a>
      </div>
     </div>
+   </nav><!-- Hero -->
+   <section id="home" class="min-h-full flex items-center justify-center px-6 pt-20">
+    <div class="text-center animate-fade-up">
+     <div class="profile-ring w-40 h-40 mx-auto mb-8">
+      <div class="w-full h-full rounded-full bg-[#1a1a22] flex items-center justify-center overflow-hidden">
+       <svg width="80" height="80" viewbox="0 0 80 80" fill="none"><circle cx="40" cy="30" r="14" fill="#4b5563" /> <ellipse cx="40" cy="68" rx="22" ry="16" fill="#4b5563" />
+         <img src="/storage/emulated/0/Pictures/WhatsApp/IMG-20260410-WA0000.jpg">
+       </svg>
+      </div>
+     </div>
+     <h1 id="hero-name" class="font-heading text-4xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-orange-400 via-pink-400 to-purple-400 bg-clip-text text-transparent">Muhammad Fauzan Ramdan</h1>
+     <p id="hero-tagline" class="text-xl text-gray-400 mb-8">Desainer Muda &amp; Kreatif</p><a href="#work" class="inline-block px-8 py-3 bg-orange-500 hover:bg-orange-600 rounded-full font-medium transition">Lihat Karya</a>
+    </div>
    </section><!-- About -->
-   <section id="about" class="relative z-10 px-6 md:px-12 py-16">
-    <div class="max-w-2xl">
-     <h2 class="font-syne font-bold text-3xl mb-6">Tentang Saya</h2>
-     <p class="text-gray-300 leading-relaxed text-lg" id="about-section-text">Saya Muhammad Fauzan Ramdan, seorang desainer muda yang berdedikasi dalam menciptakan desain visual yang inovatif dan fungsional. Dengan keahlian di bidang branding, UI/UX, dan desain grafis, saya siap membawa visi kreatif Anda menjadi kenyataan.</p>
+   <section id="about" class="py-24 px-6">
+    <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-12 items-center animate-fade-up delay-1">
+     <div>
+      <h2 class="font-heading text-3xl font-bold mb-4 text-white">Tentang Saya</h2>
+      <p id="about-text" class="text-gray-400 leading-relaxed">Saya Muhammad Fauzan Ramdan, seorang desainer muda yang passionate dalam menciptakan visual yang menarik dan fungsional. Saya percaya desain yang baik bisa mengubah cara orang berinteraksi dengan dunia digital.</p>
+     </div>
+     <div class="grid grid-cols-2 gap-4">
+      <div class="bg-[#1a1a22] rounded-2xl p-6 text-center border border-white/5"><span class="text-3xl font-bold text-orange-400">2+</span>
+       <p class="text-sm text-gray-500 mt-1">Tahun Pengalaman</p>
+      </div>
+      <div class="bg-[#1a1a22] rounded-2xl p-6 text-center border border-white/5"><span class="text-3xl font-bold text-pink-400">50+</span>
+       <p class="text-sm text-gray-500 mt-1">Proyek Selesai</p>
+      </div>
+      <div class="bg-[#1a1a22] rounded-2xl p-6 text-center border border-white/5"><span class="text-3xl font-bold text-purple-400">30+</span>
+       <p class="text-sm text-gray-500 mt-1">Klien Puas</p>
+      </div>
+      <div class="bg-[#1a1a22] rounded-2xl p-6 text-center border border-white/5"><span class="text-3xl font-bold text-blue-400">∞</span>
+       <p class="text-sm text-gray-500 mt-1">Kreativitas</p>
+      </div>
+     </div>
+    </div>
+   </section><!-- Work -->
+   <section id="work" class="py-24 px-6 bg-[#13131a]">
+    <div class="max-w-5xl mx-auto">
+     <h2 class="font-heading text-3xl font-bold mb-12 text-center animate-fade-up delay-2">Karya Saya</h2>
+     <div class="grid md:grid-cols-3 gap-6">
+      <div class="card-hover bg-[#1a1a22] rounded-2xl overflow-hidden border border-white/5 animate-fade-up delay-2">
+       <div class="h-48 bg-gradient-to-br from-orange-500/20 to-pink-500/20 flex items-center justify-center"><i data-lucide="palette" class="w-12 h-12 text-orange-400"></i>
+       </div>
+       <div class="p-5">
+        <h3 class="font-heading font-semibold mb-1">Brand Identity</h3>
+        <p class="text-sm text-gray-500">Logo &amp; Visual Branding</p>
+       </div>
+      </div>
+      <div class="card-hover bg-[#1a1a22] rounded-2xl overflow-hidden border border-white/5 animate-fade-up delay-3">
+       <div class="h-48 bg-gradient-to-br from-purple-500/20 to-blue-500/20 flex items-center justify-center"><i data-lucide="layout" class="w-12 h-12 text-purple-400"></i>
+       </div>
+       <div class="p-5">
+        <h3 class="font-heading font-semibold mb-1">UI/UX Design</h3>
+        <p class="text-sm text-gray-500">Mobile &amp; Web App</p>
+       </div>
+      </div>
+      <div class="card-hover bg-[#1a1a22] rounded-2xl overflow-hidden border border-white/5 animate-fade-up delay-4">
+       <div class="h-48 bg-gradient-to-br from-pink-500/20 to-red-500/20 flex items-center justify-center"><i data-lucide="image" class="w-12 h-12 text-pink-400"></i>
+       </div>
+       <div class="p-5">
+        <h3 class="font-heading font-semibold mb-1">Social Media</h3>
+        <p class="text-sm text-gray-500">Content &amp; Campaign</p>
+       </div>
+      </div>
+     </div>
     </div>
    </section><!-- Contact -->
-   <section id="contact" class="relative z-10 px-6 md:px-12 py-16 pb-24">
-    <h2 class="font-syne font-bold text-3xl mb-6">Mari Berkolaborasi</h2>
-    <p class="text-gray-400 mb-8">Punya proyek menarik? Hubungi saya!</p>
-    <div class="flex flex-wrap gap-4">
-     <a href="mailto:fauzan@email.com" class="inline-flex items-center gap-2 border border-white/20 hover:border-indigo-500 px-5 py-3 rounded-full text-sm transition"> <i data-lucide="mail" style="width:16px;height:16px;"></i> Email </a> <a href="#" class="inline-flex items-center gap-2 border border-white/20 hover:border-indigo-500 px-5 py-3 rounded-full text-sm transition"> <i data-lucide="instagram" style="width:16px;height:16px;"></i> Instagram </a> <a href="#" class="inline-flex items-center gap-2 border border-white/20 hover:border-indigo-500 px-5 py-3 rounded-full text-sm transition"> <i data-lucide="linkedin" style="width:16px;height:16px;"></i> LinkedIn </a>
+   <section id="contact" class="py-24 px-6">
+    <div class="max-w-lg mx-auto text-center">
+     <h2 class="font-heading text-3xl font-bold mb-4">Mari Berkolaborasi</h2>
+     <p class="text-gray-400 mb-8">Punya proyek menarik? Hubungi saya!</p>
+     <div class="flex justify-center gap-4"><a href="#" class="w-12 h-12 rounded-full bg-[#1a1a22] border border-white/10 flex items-center justify-center hover:border-orange-400 transition"> <i data-lucide="instagram" class="w-5 h-5 text-gray-400"></i> </a> <a href="#" class="w-12 h-12 rounded-full bg-[#1a1a22] border border-white/10 flex items-center justify-center hover:border-orange-400 transition"> <i data-lucide="mail" class="w-5 h-5 text-gray-400"></i> </a> <a href="#" class="w-12 h-12 rounded-full bg-[#1a1a22] border border-white/10 flex items-center justify-center hover:border-orange-400 transition"> <i data-lucide="linkedin" class="w-5 h-5 text-gray-400"></i> </a>
+     </div>
     </div>
-   </section><!-- Footer -->
-   <footer class="relative z-10 px-6 md:px-12 py-6 border-t border-white/10 text-center text-gray-500 text-sm">
+   </section>
+   <footer class="py-6 text-center text-sm text-gray-600 border-t border-white/5">
     © 2024 Muhammad Fauzan Ramdan. All rights reserved.
    </footer>
   </div>
   <script>
-    // Photo upload handler
-    function loadPhoto(input, id) {
-      const file = input.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        if (id === 'profile-photo') {
-          const slot = document.getElementById('profile-photo');
-          const placeholder = document.getElementById('profile-photo-placeholder');
-          placeholder.classList.add('hidden');
-          let img = slot.querySelector('img');
-          if (!img) { img = document.createElement('img'); slot.appendChild(img); }
-          img.src = e.target.result;
-          img.style.cssText = 'width:100%;height:100%;object-fit:cover;position:absolute;inset:0;';
-        } else {
-          const placeholder = document.getElementById(id + '-placeholder');
-          const img = document.getElementById(id + '-img');
-          placeholder.classList.add('hidden');
-          img.src = e.target.result;
-          img.classList.remove('hidden');
-        }
-      };
-      reader.readAsDataURL(file);
-    }
-
-    // Element SDK
     const defaultConfig = {
-      hero_title: 'Muhammad Fauzan Ramdan',
-      hero_subtitle: 'Young Creative Designer',
-      about_text: 'Desainer muda yang passionate dalam menciptakan visual yang memukau dan pengalaman digital yang bermakna.',
-      background_color: '#0a0a0f',
-      surface_color: '#1a1a2e',
-      text_color: '#ffffff',
-      primary_action: '#6366f1',
-      secondary_action: '#94a3b8',
-      font_family: 'Syne',
+      hero_name: "Muhammad Fauzan Ramdan",
+      hero_tagline: "Desainer Muda & Kreatif",
+      about_text: "Saya Muhammad Fauzan Ramdan, seorang desainer muda yang passionate dalam menciptakan visual yang menarik dan fungsional. Saya percaya desain yang baik bisa mengubah cara orang berinteraksi dengan dunia digital.",
+      background_color: "#0f0f12",
+      surface_color: "#1a1a22",
+      text_color: "#ffffff",
+      primary_action: "#f97316",
+      secondary_action: "#a855f7",
+      font_family: "Sora",
       font_size: 16
     };
 
     function applyConfig(config) {
-      document.getElementById('hero-title').textContent = config.hero_title || defaultConfig.hero_title;
-      document.getElementById('hero-subtitle').textContent = config.hero_subtitle || defaultConfig.hero_subtitle;
+      document.getElementById('hero-name').textContent = config.hero_name || defaultConfig.hero_name;
+      document.getElementById('hero-tagline').textContent = config.hero_tagline || defaultConfig.hero_tagline;
       document.getElementById('about-text').textContent = config.about_text || defaultConfig.about_text;
 
       const bg = config.background_color || defaultConfig.background_color;
       const surface = config.surface_color || defaultConfig.surface_color;
       const text = config.text_color || defaultConfig.text_color;
       const primary = config.primary_action || defaultConfig.primary_action;
-      const secondary = config.secondary_action || defaultConfig.secondary_action;
-      const font = config.font_family || defaultConfig.font_family;
-      const size = config.font_size || defaultConfig.font_size;
 
-      document.body.style.backgroundColor = bg;
-      document.body.style.color = text;
-      document.body.style.fontFamily = `${font}, DM Sans, sans-serif`;
-      document.body.style.fontSize = size + 'px';
+      document.getElementById('app').style.backgroundColor = bg;
+      document.querySelectorAll('.font-heading').forEach(el => {
+        const font = config.font_family || defaultConfig.font_family;
+        el.style.fontFamily = `${font}, sans-serif`;
+      });
 
-      document.querySelectorAll('.font-syne').forEach(el => el.style.fontFamily = `${font}, sans-serif`);
-      document.querySelectorAll('.bg-indigo-600').forEach(el => { el.style.backgroundColor = primary; });
-      document.querySelectorAll('.text-indigo-400').forEach(el => { el.style.color = primary; });
-      document.querySelectorAll('.photo-slot').forEach(el => { el.style.background = `linear-gradient(135deg, ${surface}, ${bg})`; });
+      const baseSize = config.font_size || defaultConfig.font_size;
+      document.getElementById('hero-name').style.fontSize = `${baseSize * 2.5}px`;
+      document.getElementById('hero-tagline').style.fontSize = `${baseSize * 1.25}px`;
+      document.getElementById('about-text').style.fontSize = `${baseSize}px`;
     }
 
     window.elementSdk.init({
@@ -175,13 +167,13 @@
         fontSizeable: { get: () => config.font_size || defaultConfig.font_size, set: (v) => { config.font_size = v; window.elementSdk.setConfig({ font_size: v }); } }
       }),
       mapToEditPanelValues: (config) => new Map([
-        ['hero_title', config.hero_title || defaultConfig.hero_title],
-        ['hero_subtitle', config.hero_subtitle || defaultConfig.hero_subtitle],
-        ['about_text', config.about_text || defaultConfig.about_text]
+        ["hero_name", config.hero_name || defaultConfig.hero_name],
+        ["hero_tagline", config.hero_tagline || defaultConfig.hero_tagline],
+        ["about_text", config.about_text || defaultConfig.about_text]
       ])
     });
 
     lucide.createIcons();
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a085eeb34f059fbc',t:'MTc4MDkwMTExMg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a08623c27f36fd10',t:'MTc4MDkwMzI4Ng=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
